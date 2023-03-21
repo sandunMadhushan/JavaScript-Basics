@@ -1,1 +1,2 @@
-[Passenger Couner App](https://passenger-counter-app-jscript.netlify.app/)
+Passenger Counter App <br>
+https://passenger-counter-app-jscript.netlify.app/
