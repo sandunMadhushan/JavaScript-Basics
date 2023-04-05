@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Customer Reviews using Vue.js</title>
+    <!-- Add the Vue.js CDN link -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
+    <!-- Link to the external CSS file -->
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="customer-reviews">
+      <h2>Customer Reviews</h2>
+
+      <div class="review-container">
+        <div
+          v-for="(review, index) in featuredReviews"
+          :key="review.name"
+          class="review-card review-card--featured"
+        >
+          <p><strong>{{ review.name }}</strong> says:</p>
+          <p>{{ review.comment }}</p>
+          <p>Rating: {{ review.rating }}/5</p>
+        </div>
+      </div>
+
+      <div class="review-container">
+        <div
+          v-for="(review, index) in remainingReviews"
+          :key="review.name"
+          class="review-card"
+        >
+          <p><strong>{{ review.name }}</strong> says:</p>
+          <p>{{ review.comment }}</p>
+          <p>Rating: {{ review.rating }}/5</p>
+        </div>
+      </div>
+
+      <form @submit.prevent="addReview">
+        <label for="name">Name:</label>
+        <input type="text" id="name" v-model="newReview.name" />
+
+        <label for="comment">Comment:</label>
+        <textarea id="comment" v-model="newReview.comment"></textarea>
+
+        <label for="rating">Rating:</label>
+        <select id="rating" v-model="newReview.rating">
+          <option value="">Select a rating</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+
+        <button type="submit">Submit Review</button>
+      </form>
+    </div>
+
+    <script>
+      new Vue({
+        el: "#customer-reviews",
+        data: {
+          reviews: [
+            { name: "John Doe", comment: "Great product!", rating: 4 },
+            {
+              name: "Mary Smith",
+              comment: "I was disappointed with the quality.",
+              rating: 2,
+            },
+            {
+              name: "Bob Johnson",
+              comment: "Best thing I have ever purchased!",
+              rating: 5,
+            },
+            {
+              name: "Jane Smith",
+              comment:
+                "The product was okay, but the customer service was great.",
+              rating: 3,
+            },
+            {
+              name: "Tom Jones",
+              comment: "The product arrived damaged.",
+              rating: 2,
+            },
+          ],
+          newReview: { name: "", comment: "", rating: "" },
+        },
+        computed: {
+          featuredReviews: function () {
+            return this.reviews.slice(0, 2);
+          },
+          remainingReviews: function () {
+            return this.reviews.slice(2);
+          },
+        },
+
+        methods: {
+          addReview: function () {
+            if (
+              this.newReview.name &&
+              this.newReview.comment &&
+              this.newReview.rating
+            ) {
+              this.reviews.push({
+                name: this.newReview.name,
+                comment: this.newReview.comment,
+                rating: this.newReview.rating,
+              });
+              this.newReview.name = "";
+              this.newReview.comment = "";
+              this.newReview.rating = "";
+            } else {
+              alert("Please fill out all fields.");
+            }
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
